@@ -63,6 +63,7 @@ const getPoint = () => {
 bot.onText(/\/point/, async function(msg) {
   const chatId = msg.chat.id;
   const point = await getPoint();
-  replyMessage = 'Justin 目前有 ' + point + ' 點';
+  replyMessage = 'Justin 目前有 ' + point + ' 點\n';
+  replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
