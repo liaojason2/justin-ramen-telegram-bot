@@ -9,7 +9,7 @@
 
 ## Quickstart
 
-- Add telegram group
+- Ramen first!
 
 https://t.me/+hqwgjycUkN04OGI1
 
@@ -19,7 +19,7 @@ https://t.me/+hqwgjycUkN04OGI1
 echo CHANNEL_TOKEN=<Your Channel Token> > .env
 ```
 
-- start server
+- Start server
 
 ```sh
 # node
