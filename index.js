@@ -12,6 +12,13 @@ bot.onText(/\/start/, function (msg) {
 });
 
 // /help
+bot.onText(/\/hi/, function (msg) {
+  var chatId = msg.chat.id;
+  var resp = "Hi";
+  bot.sendMessage(chatId, resp);
+});
+
+// /help
 bot.onText(/\/help/, function (msg) {
   var chatId = msg.chat.id;
   var resp = "Justin 請我吃拉麵 bot\n\n ";
