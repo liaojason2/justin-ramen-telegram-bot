@@ -14,7 +14,7 @@ bot.onText(/\/start/, function (msg) {
 // /help
 bot.onText(/\/help/, function (msg) {
   var chatId = msg.chat.id;
-  var resp = "Justin 請我吃拉麵ㄒㄒ bot\n\n ";
+  var resp = "Justin 請我吃拉麵 bot\n\n ";
   var startFunction = "/start"  
   var pollFunction = "/poll 開啟投票"
   var resp = "賈斯丁拉麵 bot\n\n" + startFunction + "\n" + pollFunction;
