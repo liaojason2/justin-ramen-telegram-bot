@@ -62,16 +62,16 @@ const getPoint = () => {
 };
 
 // /point
-bot.onText(/\/point$/, async (message) => {
+bot.onText(/\/point/, async (message) => {
   const chatId = message.chat.id;
   const point = await getPoint();
+  if (message.text.split()[0] === '/pointrule') return 0;
   replyMessage = 'Justin 目前有 ' + point + ' 點\n';
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
 
 // /location
-
 bot.onText(/\/location/, (msg) => {
   const chatId = msg.chat.id;
   const latitude = 25.04406477400013;
@@ -80,7 +80,8 @@ bot.onText(/\/location/, (msg) => {
   bot.sendLocation(chatId, latitude, longitude);
 });
 
-bot.onText(/\/pointrule$/, (msg) => {
+// /pointrule
+bot.onText(/\/pointrule/, (msg) => {
   const chatId = msg.chat.id;
   let replyMessage = '1.每消費一碗拉麵可獲得點數一點\n';
   replyMessage += '2.深夜消費(PM10:00起)點數雙倍送!\n';
