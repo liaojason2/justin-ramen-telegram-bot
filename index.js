@@ -20,6 +20,7 @@ bot.onText(/\/help/, function(msg) {
   replyMessage += '/start\n';
   replyMessage += '/poll 開啟投票\n';
   replyMessage += '/point Justin 已經累積的點數\n';
+  replyMessage += '/location 麵屋雞金位置\n';
   bot.sendMessage(chatId, replyMessage);
 });
 
@@ -34,8 +35,9 @@ bot.onText(/\/poll/, function(msg, match) {
   const timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   if (username === 'JustinLin099') {
     if (!time) bot.sendMessage(chatId, 'Justin, 你忘了填時間');
-    else if (!time.match(timeRegex)) bot.sendMessage(chatId, 'Justin, 這不是時間');
-    else {
+    else if (!time.match(timeRegex)) {
+      bot.sendMessage(chatId, 'Justin, 這不是時間');
+    } else {
       message = '今天 ' + time + ' 要吃拉麵嗎';
       bot.sendPoll(chatId, message, ['要', '不要'], {
         is_anonymous: false,
@@ -60,10 +62,20 @@ const getPoint = () => {
 };
 
 // /point
-bot.onText(/\/point/, async function(msg) {
-  const chatId = msg.chat.id;
+bot.onText(/\/point/, async (message) => {
+  const chatId = message.chat.id;
   const point = await getPoint();
   replyMessage = 'Justin 目前有 ' + point + ' 點\n';
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
+});
+
+// /location
+
+bot.onText(/\/location/, (msg) => {
+  const chatId = msg.chat.id;
+  const latitude = 25.04406477400013;
+  const longitude = 121.53271914128021;
+  bot.sendMessage = '這是麵屋雞金的位置！';
+  bot.sendLocation(chatId, latitude, longitude);
 });
