@@ -62,7 +62,7 @@ const getPoint = () => {
 };
 
 // /point
-bot.onText(/\/point/, async (message) => {
+bot.onText(/\/point$/, async (message) => {
   const chatId = message.chat.id;
   const point = await getPoint();
   replyMessage = 'Justin 目前有 ' + point + ' 點\n';
@@ -80,7 +80,7 @@ bot.onText(/\/location/, (msg) => {
   bot.sendLocation(chatId, latitude, longitude);
 });
 
-bot.onText(/\/pointrule/, (msg) => {
+bot.onText(/\/pointrule$/, (msg) => {
   const chatId = msg.chat.id;
   let replyMessage = '1.每消費一碗拉麵可獲得點數一點\n';
   replyMessage += '2.深夜消費(PM10:00起)點數雙倍送!\n';
