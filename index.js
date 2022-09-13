@@ -8,7 +8,9 @@ const bot = new TelegramBot(token, { polling: true });
 bot.replyOn = function (cmd, context) {
 	reg = new RegExp(`^/${cmd}`);
 	const bot = this;
-	bot.onText(reg, async (msg /*, match*/) => {
+	bot.onText(reg, async (msg) => {
+		console.log(cmd)
+		if (msg.text.split(" ")[0] !== `/${cmd}`) return 0;
 		if(context instanceof Function) {
 			let isSent = false;
 			const send = (text) => {
@@ -65,8 +67,7 @@ bot.replyOn("poll", (msg, send) => {
 			});
 		}
 	} else {
-		const replyMessage = `你不是 Justin, 你是 ${username}`;
-		bot.sendMessage(chatId, replyMessage);
+		send(`你不是 Justin, 你是 ${username}`);
 	}
 })
 
@@ -82,8 +83,7 @@ const getPoint = () => {
 		});
 };
 
-// $ 是為了避免和 pointrule 衝突
-bot.replyOn("point$", async (msg) => `
+bot.replyOn("point", async (msg) => `
 Justin 目前有 ${await getPoint()} 點
 資料由 @gnehs 提供
 `)
