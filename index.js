@@ -21,6 +21,7 @@ bot.onText(/\/help/, function(msg) {
   replyMessage += '/poll 開啟投票\n';
   replyMessage += '/point Justin 已經累積的點數\n';
   replyMessage += '/location 麵屋雞金位置\n';
+  replyMessage += '/dev 開發者資訊';
   bot.sendMessage(chatId, replyMessage);
 });
 
@@ -89,5 +90,18 @@ bot.onText(/\/pointrule/, (msg) => {
   replyMessage += '4.消費當下給予點數、後面不補發。\n';
   replyMessage += '5.累積的點數、可以在五之神製作所重新開幕後、至【五之神製作所】兌換\n';
   replyMessage += '6.集點卡上兌換品項擇一兌換、以點數最高的品項為準\n';
+  bot.sendMessage(chatId, replyMessage);
+});
+
+// /dev
+bot.onText(/\/dev/, function(msg) {
+  const chatId = msg.chat.id;
+  let replyMessage = '開發者資訊\n';
+  replyMessage += '\n';
+  replyMessage += 'Web develop by @gnehs\n';
+  replyMessage += 'https://ramen.justinlin.tw/\n';
+  replyMessage += '\n';
+  replyMessage += 'Bot develop by @liaojason2\n';
+  replyMessage += 'https://github.com/liaojason2/justin-ramen-telegram-bot';
   bot.sendMessage(chatId, replyMessage);
 });
