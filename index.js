@@ -39,13 +39,13 @@ bot.onText(/\/poll/, function(msg, match) {
     else if (!time.match(timeRegex)) {
       bot.sendMessage(chatId, 'Justin, 這不是時間');
     } else {
-      message = '今天 ' + time + ' 要吃拉麵嗎';
+      message = `今天 ${time} 要吃拉麵嗎`;
       bot.sendPoll(chatId, message, ['要', '不要'], {
         is_anonymous: false,
       });
     }
   } else {
-    const replyMessage = '你不是 Justin, 你是 ' + username;
+    const replyMessage = `你不是 Justin, 你是 ${username}`;
     bot.sendMessage(chatId, replyMessage);
   }
 });
@@ -66,7 +66,7 @@ const getPoint = () => {
 bot.onText(/\/point(@.*|$)/, async (message) => {
   const chatId = message.chat.id;
   const point = await getPoint();
-  replyMessage = 'Justin 目前有 ' + point + ' 點\n';
+  replyMessage = `Justin 目前有 ${point} 點\n`;
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
