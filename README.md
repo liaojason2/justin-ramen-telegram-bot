@@ -26,10 +26,10 @@ echo CHANNEL_TOKEN=<Your Channel Token> > .env
 node index.js
 
 # docker
-docker run --name justin-ramen-bot --env-file .env -d ghcr.io/liaojason2/justin-ramen-bot:1.1.2
+docker run --name justin-ramen-bot --env-file .env -d ghcr.io/liaojason2/justin-ramen-bot
 ```
 
 ## Reference
 
 - Data source [Justin-Ramen](https://github.com/gnehs/Justin-Ramen)
-- Sugar Daddy @justinlin099
+- Sugar daddy @justinlin099
