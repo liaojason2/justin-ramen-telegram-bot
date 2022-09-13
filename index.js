@@ -51,21 +51,20 @@ bot.onText(/\/poll/, function(msg, match) {
 
 const getPoint = () => {
   const data = axios
-      .get('https://ramen.justinlin.tw/data.json')
-      .then(function(response) {
-        return response.data.total;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    .get('https://ramen.justinlin.tw/data.json')
+    .then(function(response) {
+      return response.data.total;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
   return data;
 };
 
 // /point
-bot.onText(/\/point/, async (message) => {
+bot.onText(/\/point(@.*|$)/, async (message) => {
   const chatId = message.chat.id;
   const point = await getPoint();
-  if (message.text.split()[0] === '/pointrule') return 0;
   replyMessage = 'Justin 目前有 ' + point + ' 點\n';
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
