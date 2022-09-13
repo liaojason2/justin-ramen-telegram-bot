@@ -20,8 +20,8 @@ bot.onText(/\/help/, function(msg) {
   replyMessage += '/start\n';
   replyMessage += '/poll 開啟投票\n';
   replyMessage += '/point Justin 已經累積的點數\n';
-  replyMessage += '/pointrule 麵屋雞金點數規則\n';
   replyMessage += '/location 麵屋雞金位置\n';
+  replyMessage += '/pointrule 麵屋雞金點數規則\n';
   bot.sendMessage(chatId, replyMessage);
 });
 
