@@ -76,6 +76,6 @@ bot.onText(/\/location/, (msg) => {
   const chatId = msg.chat.id;
   const latitude = 25.04406477400013;
   const longitude = 121.53271914128021;
-  bot.sendMessage = '這是麵屋雞金的位置！';
+  bot.sendMessage(chatId, '這是麵屋雞金的位置！');
   bot.sendLocation(chatId, latitude, longitude);
 });
