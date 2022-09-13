@@ -51,18 +51,18 @@ bot.onText(/\/poll/, function(msg, match) {
 
 const getPoint = () => {
   const data = axios
-      .get('https://ramen.justinlin.tw/data.json')
-      .then(function(response) {
-        return response.data.total;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    .get('https://ramen.justinlin.tw/data.json')
+    .then(function(response) {
+      return response.data.total;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
   return data;
 };
 
 // /point
-bot.onText(/\/point$/, async (message) => {
+bot.onText(/\/point(@.*|$)/, async (message) => {
   const chatId = message.chat.id;
   const point = await getPoint();
   replyMessage = 'Justin 目前有 ' + point + ' 點\n';
@@ -71,7 +71,6 @@ bot.onText(/\/point$/, async (message) => {
 });
 
 // /location
-
 bot.onText(/\/location/, (msg) => {
   const chatId = msg.chat.id;
   const latitude = 25.04406477400013;
@@ -80,7 +79,8 @@ bot.onText(/\/location/, (msg) => {
   bot.sendLocation(chatId, latitude, longitude);
 });
 
-bot.onText(/\/pointrule$/, (msg) => {
+// /pointrule
+bot.onText(/\/pointrule/, (msg) => {
   const chatId = msg.chat.id;
   let replyMessage = '1.每消費一碗拉麵可獲得點數一點\n';
   replyMessage += '2.深夜消費(PM10:00起)點數雙倍送!\n';
