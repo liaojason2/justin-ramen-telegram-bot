@@ -24,8 +24,6 @@ bot.replyOn = function(cmd, context) {
   });
 };
 
-bot.replyOn('simba', `hello ${1 + 2}`);
-
 // /start
 bot.replyOn('start', 'Hi, 這是 Justin 拉麵 bot！');
 
