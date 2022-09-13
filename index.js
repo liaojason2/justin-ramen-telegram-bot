@@ -53,8 +53,7 @@ bot.replyOn("poll", (msg, send) => {
 		time = msg.text.split(" ")[1];
 	}
 	const timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-	if (username === "simbafs") {
-		// if (username === "JustinLin099") {
+		if (username === "JustinLin099") {
 		if (!time) {
 			send("Justin, 你忘了填時間");
 		} else if (!time.match(timeRegex)) {
