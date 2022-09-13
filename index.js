@@ -76,6 +76,18 @@ bot.onText(/\/location/, (msg) => {
   const chatId = msg.chat.id;
   const latitude = 25.04406477400013;
   const longitude = 121.53271914128021;
-  bot.sendMessage(chatId, '這是麵屋雞金的位置！');
+  bot.sendMessage = '這是麵屋雞金的位置！';
   bot.sendLocation(chatId, latitude, longitude);
+});
+
+bot.onText(/\/pointrule/, (msg) => {
+  const chatId = msg.chat.id;
+  let replyMessage = '1.每消費一碗拉麵可獲得點數一點\n';
+  replyMessage += '2.深夜消費(PM10:00起)點數雙倍送!\n';
+  replyMessage += '(麵屋雞金 新生南路店深夜時段將於近期開放、開放時間請注意麵屋雞金 粉專公告)\n';
+  replyMessage += '3.多人消費可以蓋在同一張點卡上、但是不能多張卡合併點數兌換。\n';
+  replyMessage += '4.消費當下給予點數、後面不補發。\n';
+  replyMessage += '5.累積的點數、可以在五之神製作所重新開幕後、至【五之神製作所】兌換\n';
+  replyMessage += '6.集點卡上兌換品項擇一兌換、以點數最高的品項為準\n';
+  bot.sendMessage(chatId, replyMessage);
 });
