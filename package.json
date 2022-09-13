@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier-eslint \"src/**/*.js\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
+    "date-and-time": "^2.4.1",
     "dotenv": "^16.0.2",
-    "node-telegram-bot-api": "^0.59.0"
+    "node-telegram-bot-api": "^0.59.0",
+    "prettier-eslint-cli": "^7.1.0"
   },
   "devDependencies": {
     "eslint": ">=5.16.0",
