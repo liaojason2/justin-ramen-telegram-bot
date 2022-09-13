@@ -1,5 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
+const date = require('date-and-time');
 require('dotenv').config('.env');
 
 const token = process.env.CHANNEL_TOKEN;
@@ -63,11 +64,21 @@ const getPoint = () => {
   return data;
 };
 
+const getTodayRequiredPoint = (today, startDay) => {
+  return Math.ceil(date.subtract(today, startDay).toDays()) * 14;
+};
+
 // /point
 bot.onText(/\/point(@.*|$)/, async (message) => {
   const chatId = message.chat.id;
+  const startDay = new Date('2022/9/12');
+  const today = new Date();
   const point = await getPoint();
-  replyMessage = `Justin 目前有 ${point} 點\n`;
+  const todayRequiredPoint = getTodayRequiredPoint(today, startDay);
+  console.log(Math.floor(point/300*100));
+  replyMessage = `Justin 目前有 ${point} 點, 完成度 ${Math.floor(point/300*100)}%\n`;
+  replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
+  if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n';
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
