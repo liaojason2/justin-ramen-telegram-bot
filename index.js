@@ -21,6 +21,7 @@ bot.onText(/^\/help(@.*|$)/, function(msg) {
   let replyMessage = 'Justin 請我吃拉麵 bot\n';
   replyMessage += '\n';
   replyMessage += '/start\n';
+  replyMessage += '/intrp';
   replyMessage += '/poll 開啟投票\n';
   replyMessage += '/point Justin 已經累積的點數\n';
   replyMessage += '/location 麵屋雞金位置\n';
@@ -30,7 +31,7 @@ bot.onText(/^\/help(@.*|$)/, function(msg) {
 });
 
 // /intro
-bot.onText(/\intro/, (message) => {
+bot.onText(/^\/intro(@.*|$)/, (message) => {
   const chatId = message.chat.id;
   fs.readFile('./data.json', (err, data) => {
     const replyMessage = JSON.parse(data).data.intro;
