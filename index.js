@@ -9,14 +9,14 @@ const bot = new TelegramBot(token, {polling: true});
 
 
 // /start
-bot.onText(/\/start/, function(msg) {
+bot.onText(/^\/start(@.*|$)/, function(msg) {
   const chatId = msg.chat.id;
   const replyMessage = 'Hi, 這是 Justin 拉麵 bot！';
   bot.sendMessage(chatId, replyMessage);
 });
 
 // /help
-bot.onText(/\/help/, function(msg) {
+bot.onText(/^\/help(@.*|$)/, function(msg) {
   const chatId = msg.chat.id;
   let replyMessage = 'Justin 請我吃拉麵 bot\n';
   replyMessage += '\n';
@@ -54,7 +54,7 @@ const processPinedMessage = (message) => {
 };
 
 // /poll
-bot.onText(/\/poll/, function(msg, match) {
+bot.onText(/^\/poll(@.*|$)/, function(msg, match) {
   const chatId = msg.chat.id;
   const username = msg.from.username;
   let time = '';
@@ -98,7 +98,7 @@ const getTodayRequiredPoint = (today, startDay) => {
 };
 
 // /point
-bot.onText(/\/point(@.*|$)/, async (message) => {
+bot.onText(/^\/point(@.*|$)/, async (message) => {
   const chatId = message.chat.id;
   const startDay = new Date('2022/9/12');
   const today = new Date();
@@ -112,7 +112,7 @@ bot.onText(/\/point(@.*|$)/, async (message) => {
 });
 
 // /location
-bot.onText(/\/location/, (msg) => {
+bot.onText(/^\/location(@.*|$)/, (msg) => {
   const chatId = msg.chat.id;
   const latitude = 25.04406477400013;
   const longitude = 121.53271914128021;
@@ -121,7 +121,7 @@ bot.onText(/\/location/, (msg) => {
 });
 
 // /pointrule
-bot.onText(/\/pointrule/, (msg) => {
+bot.onText(/^\/pointrule(@.*|$)/, (msg) => {
   const chatId = msg.chat.id;
   let replyMessage = '1.每消費一碗拉麵可獲得點數一點\n';
   replyMessage += '2.深夜消費(PM10:00起)點數雙倍送!\n';
@@ -134,7 +134,7 @@ bot.onText(/\/pointrule/, (msg) => {
 });
 
 // /dev
-bot.onText(/\/dev/, function(msg) {
+bot.onText(/^\/dev(@.*|$)/, function(msg) {
   const chatId = msg.chat.id;
   let replyMessage = '開發者資訊\n';
   replyMessage += '\n';
