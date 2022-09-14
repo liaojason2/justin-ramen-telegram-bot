@@ -29,6 +29,15 @@ bot.onText(/\/help/, function(msg) {
   bot.sendMessage(chatId, replyMessage);
 });
 
+// /intro
+bot.onText(/\intro/, (message) => {
+  const chatId = message.chat.id;
+  fs.readFile('./data.json', (err, data) => {
+    const replyMessage = JSON.parse(data).data.intro;
+    bot.sendMessage(chatId, replyMessage);
+  });
+});
+
 const processPinedMessage = (message) => {
   fs.readFile('./data/db.json', (error, content) => {
     if (!content) return;
