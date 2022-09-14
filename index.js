@@ -30,7 +30,7 @@ bot.onText(/\/help/, function(msg) {
 });
 
 const processPinedMessage = (message) => {
-  fs.readFile('./db.json', (error, content) => {
+  fs.readFile('./data/db.json', (error, content) => {
     if (!content) return;
     const data = JSON.parse(content);
     const chatId = data.chatId;
@@ -41,7 +41,7 @@ const processPinedMessage = (message) => {
     chatId: message.chat.id,
     message_id: message.message_id,
   };
-  fs.writeFileSync('./db.json', JSON.stringify(pinnedMessageInfo));
+  fs.writeFileSync('./data/db.json', JSON.stringify(pinnedMessageInfo));
 };
 
 // /poll
