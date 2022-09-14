@@ -21,7 +21,7 @@ bot.onText(/^\/help(@.*|$)/, function(msg) {
   let replyMessage = 'Justin 請我吃拉麵 bot\n';
   replyMessage += '\n';
   replyMessage += '/start\n';
-  replyMessage += '/intrp';
+  replyMessage += '/intro Justin 的集點計畫';
   replyMessage += '/poll 開啟投票\n';
   replyMessage += '/point Justin 已經累積的點數\n';
   replyMessage += '/location 麵屋雞金位置\n';
