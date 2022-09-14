@@ -1,10 +1,12 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const date = require('date-and-time');
+const fs = require('fs');
 require('dotenv').config('.env');
 
 const token = process.env.CHANNEL_TOKEN;
 const bot = new TelegramBot(token, {polling: true});
+
 
 // /start
 bot.onText(/\/start/, function(msg) {
@@ -27,6 +29,21 @@ bot.onText(/\/help/, function(msg) {
   bot.sendMessage(chatId, replyMessage);
 });
 
+const processPinedMessage = (message) => {
+  fs.readFile('./db.json', (error, content) => {
+    if (!content) return;
+    const data = JSON.parse(content);
+    const chatId = data.chatId;
+    bot.unpinChatMessage(chatId);
+  });
+  bot.pinChatMessage(message.chat.id, message.message_id);
+  const pinnedMessageInfo = {
+    chatId: message.chat.id,
+    message_id: message.message_id,
+  };
+  fs.writeFileSync('./db.json', JSON.stringify(pinnedMessageInfo));
+};
+
 // /poll
 bot.onText(/\/poll/, function(msg, match) {
   const chatId = msg.chat.id;
@@ -42,8 +59,11 @@ bot.onText(/\/poll/, function(msg, match) {
       bot.sendMessage(chatId, 'Justin, 這不是時間');
     } else {
       message = `今天 ${time} 要吃拉麵嗎`;
-      bot.sendPoll(chatId, message, ['要', '不要'], {
+      const sentPollMessage = bot.sendPoll(chatId, message, ['要', '不要'], {
         is_anonymous: false,
+      });
+      sentPollMessage.then((message)=>{
+        processPinedMessage(message);
       });
     }
   } else {
@@ -75,7 +95,6 @@ bot.onText(/\/point(@.*|$)/, async (message) => {
   const today = new Date();
   const point = await getPoint();
   const todayRequiredPoint = getTodayRequiredPoint(today, startDay);
-  console.log(Math.floor(point/300*100));
   replyMessage = `Justin 目前有 ${point} 點, 完成度 ${Math.floor(point/300*100)}%\n`;
   replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
   if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n';
