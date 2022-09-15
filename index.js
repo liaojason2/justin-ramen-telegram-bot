@@ -55,7 +55,7 @@ const processPinedMessage = (message) => {
 };
 
 // /poll
-bot.onText(/^\/poll(@.*|$)/, function(msg, match) {
+bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
   const chatId = msg.chat.id;
   const username = msg.from.username;
   let time = '';
