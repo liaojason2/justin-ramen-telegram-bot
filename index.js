@@ -108,6 +108,7 @@ bot.onText(/^\/point(@.*|$)/, async (message) => {
   replyMessage = `Justin 目前有 ${point} 點, 完成度 ${Math.floor(point/300*100)}%\n`;
   replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
   if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n';
+  else replyMessage += 'Justin 目前有達到目標進度！\n';
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
