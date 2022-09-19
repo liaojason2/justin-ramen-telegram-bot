@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  packages: read|write
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: justin-ramen-bot
