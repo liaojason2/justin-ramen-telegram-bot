@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build and push Docker image CI
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read|write
+      packages: write
 
     steps:
       - name: Checkout repository
