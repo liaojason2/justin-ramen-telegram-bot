@@ -3,7 +3,9 @@ module.exports = {
     'browser': true,
     'es2021': true,
   },
-  'extends': 'google',
+  'extends': [
+    'google',
+  ],
   'overrides': [
   ],
   'parserOptions': {
@@ -12,5 +14,6 @@ module.exports = {
   },
   'rules': {
     'indent': ['error', 2],
+    'quotes': ['error', 'single'],
   },
 };
