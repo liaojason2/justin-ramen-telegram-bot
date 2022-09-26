@@ -64,11 +64,9 @@ bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
     ? `@${msg.from.username}`
     : msg.from.first_name;
 
-  let time = '';
-  if (msg.text.split(' ')[1]) {
-    time = msg.text.split(' ')[1];
-  }
+  const time = msg.text?.split(' ')[1] ?? '';
   const timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
   if (userIdentifier === '@JustinLin099') {
     if (!time) bot.sendMessage(chatId, 'Justin, 你忘了填時間');
     else if (!time.match(timeRegex)) {
