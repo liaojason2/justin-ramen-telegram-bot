@@ -60,9 +60,9 @@ bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
 
   // @<username> if users have set up their username;
   // <first_name> if users have not set up their username.
-  const userIdentifier = msg.from.username
-    ? `@${msg.from.username}`
-    : msg.from.first_name;
+  const userIdentifier = msg.from.username ?
+    `@${msg.from.username}` :
+    `${msg.from.first_name} ${msg.from.last_name ?? ''}`.trim();
 
   const time = msg.text?.split(' ')[1] ?? '';
   const timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
