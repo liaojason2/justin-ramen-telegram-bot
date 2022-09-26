@@ -57,13 +57,19 @@ const processPinedMessage = (message) => {
 // /poll
 bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
   const chatId = msg.chat.id;
-  const username = msg.from.username;
+
+  // @<username> if users have set up their username;
+  // <first_name> if users have not set up their username.
+  const userIdentifier = msg.from.username
+    ? `@${msg.from.username}`
+    : msg.from.first_name;
+
   let time = '';
   if (msg.text.split(' ')[1]) {
     time = msg.text.split(' ')[1];
   }
   const timeRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-  if (username === 'JustinLin099') {
+  if (userIdentifier === '@JustinLin099') {
     if (!time) bot.sendMessage(chatId, 'Justin, 你忘了填時間');
     else if (!time.match(timeRegex)) {
       bot.sendMessage(chatId, 'Justin, 這不是時間');
@@ -77,7 +83,7 @@ bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
       });
     }
   } else {
-    const replyMessage = `你不是 Justin, 你是 ${username}`;
+    const replyMessage = `你不是 Justin, 你是 ${userIdentifier}`;
     bot.sendMessage(chatId, replyMessage);
   }
 });
