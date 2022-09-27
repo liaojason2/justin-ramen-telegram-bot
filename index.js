@@ -71,7 +71,8 @@ bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
     else if (!time.match(timeRegex)) {
       bot.sendMessage(chatId, 'Justin, 這不是時間');
     } else {
-      message = `今天 ${time} 要吃拉麵嗎`;
+      const today = new Date();
+      message = `${today.getMonth()+1+'/'+today.getDate()} ${time} 要吃拉麵嗎`;
       const sentPollMessage = bot.sendPoll(chatId, message, ['要', '不要'], {
         is_anonymous: false,
       });
