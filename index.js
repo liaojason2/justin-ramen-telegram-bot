@@ -115,8 +115,8 @@ bot.onText(/^\/point(@.*|$)/, async (message) => {
   replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
   if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n\n';
   else replyMessage += 'Justin 目前有達到目標進度！\n\n';
-  replyMessage += `依照目前進度，只要在一般時間有 ${300 - point} 人，\
-或是夜間時段有 ${(300 - point) / 2} 人就可以達到目標了！\n`;
+  replyMessage += `依照目前進度，只要在一般時間有 ${Math.max(300 - point, 0)} 人，\
+或是夜間時段有 ${Math.max((300 - point) / 2, 0)} 人就可以達到目標了！\n`;
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
