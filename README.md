@@ -13,9 +13,11 @@
 
 https://t.me/+hqwgjycUkN04OGI1
 
-- Create .env file
+- Create db.json and .env file
 
 ```sh
+mkdir data
+touch data/db.json
 echo CHANNEL_TOKEN=<Your Channel Token> > .env
 ```
 
@@ -26,7 +28,7 @@ echo CHANNEL_TOKEN=<Your Channel Token> > .env
 node index.js
 
 # docker
-docker run --name justin-ramen-bot --env-file .env -d ghcr.io/liaojason2/justin-ramen-bot
+docker run --name justin-ramen-bot --env-file .env -d -v $PWD/data:/app/data ghcr.io/liaojason2/justin-ramen-bot:latest
 ```
 
 ## Reference

@@ -1,8 +1,4 @@
-FROM debian:bullseye
-
-# Install Node.js
-RUN apt update
-RUN apt install --yes nodejs 
+FROM node:16-bullseye-slim
 
 # Timezone
 ENV TZ="Asia/Taipei"
@@ -11,9 +7,17 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+# Install dependencies
+COPY [ "package.json", "yarn.lock", "./" ]
+RUN [ "yarn", "--production" ]
 
-COPY . .
+# Copy source code
+COPY [ \
+    "data.json", \
+    "index.js", \
+    "LICENSE", \
+    "./" \
+    ]
 
 EXPOSE 443
 

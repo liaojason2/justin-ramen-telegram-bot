@@ -1,4 +1,4 @@
 .env
-/data
+data/
 .git
 node_module
