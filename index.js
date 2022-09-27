@@ -7,7 +7,6 @@ require('dotenv').config('.env');
 const token = process.env.CHANNEL_TOKEN;
 const bot = new TelegramBot(token, {polling: true});
 
-
 // /start
 bot.onText(/^\/start(@.*|$)/, function(msg) {
   const chatId = msg.chat.id;
@@ -76,7 +75,7 @@ bot.onText(/^\/poll(?:@.*?)?( .*|$)/, function(msg, match) {
       const sentPollMessage = bot.sendPoll(chatId, message, ['要', '不要'], {
         is_anonymous: false,
       });
-      sentPollMessage.then((message)=>{
+      sentPollMessage.then((message) => {
         processPinedMessage(message);
       });
     }
@@ -109,10 +108,14 @@ bot.onText(/^\/point(@.*|$)/, async (message) => {
   const today = new Date();
   const point = await getPoint();
   const todayRequiredPoint = getTodayRequiredPoint(today, startDay);
-  replyMessage = `Justin 目前有 ${point} 點, 完成度 ${Math.floor(point/300*100)}%\n`;
+  replyMessage = `Justin 目前有 ${point} 點, 完成度 ${Math.floor(
+    (point / 300) * 100,
+  )}%\n`;
   replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
-  if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n';
-  else replyMessage += 'Justin 目前有達到目標進度！\n';
+  if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n\n';
+  else replyMessage += 'Justin 目前有達到目標進度！\n\n';
+  replyMessage += `依照目前進度，只要在一般時間有 ${300 - point} 人，\
+或是夜間時段有 ${(300 - point) / 2} 人就可以達到目標了！\n`;
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
@@ -131,10 +134,13 @@ bot.onText(/^\/pointrule(@.*|$)/, (msg) => {
   const chatId = msg.chat.id;
   let replyMessage = '1.每消費一碗拉麵可獲得點數一點\n';
   replyMessage += '2.深夜消費(PM10:00起)點數雙倍送!\n';
-  replyMessage += '(麵屋雞金 新生南路店深夜時段將於近期開放、開放時間請注意麵屋雞金 粉專公告)\n';
-  replyMessage += '3.多人消費可以蓋在同一張點卡上、但是不能多張卡合併點數兌換。\n';
+  replyMessage +=
+    '(麵屋雞金 新生南路店深夜時段將於近期開放、開放時間請注意麵屋雞金 粉專公告)\n';
+  replyMessage +=
+    '3.多人消費可以蓋在同一張點卡上、但是不能多張卡合併點數兌換。\n';
   replyMessage += '4.消費當下給予點數、後面不補發。\n';
-  replyMessage += '5.累積的點數、可以在五之神製作所重新開幕後、至【五之神製作所】兌換\n';
+  replyMessage +=
+    '5.累積的點數、可以在五之神製作所重新開幕後、至【五之神製作所】兌換\n';
   replyMessage += '6.集點卡上兌換品項擇一兌換、以點數最高的品項為準\n';
   bot.sendMessage(chatId, replyMessage);
 });
