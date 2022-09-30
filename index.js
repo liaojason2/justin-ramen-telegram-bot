@@ -2,7 +2,15 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const date = require('date-and-time');
 const fs = require('fs');
+const http = require('http');
 require('dotenv').config('.env');
+
+
+http.createServer(function(req, res) {
+  // write a response to the client
+  res.write('Hello, this is justin ramen bot server!');
+  res.end(); // end the response
+}).listen(8080);
 
 const token = process.env.CHANNEL_TOKEN;
 const bot = new TelegramBot(token, {polling: true});
