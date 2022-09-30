@@ -3,14 +3,13 @@ name: Build and Push Docker Image CI
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: justin-ramen-bot
 
 jobs:
-
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
@@ -29,7 +28,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
-        id: meta
+        id: metab
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}
@@ -40,3 +39,17 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+
+  deploy-to-cloud-run:
+    runs-on: ubuntu-latest
+    steps:
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+
+      - name: "Deploy to Cloud Run"
+        uses: "google-github-actions/deploy-cloudrun@v0"
+        with:
+          image: "${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}"
+          service: "justin-ramen-bot"
