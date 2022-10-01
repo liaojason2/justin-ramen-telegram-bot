@@ -64,6 +64,6 @@ jobs:
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest \
           --platform "managed" \
           --service-account fs-identity \
-          --update-env-vars BUCKET=justin-ramen-bot-buckets \
+          --update-env-vars BUCKET=${{ secret.BUCKET_NAME }} \
           --quiet \
           --allow-unauthenticated
