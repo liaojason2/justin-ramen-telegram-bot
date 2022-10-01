@@ -65,6 +65,6 @@ jobs:
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest \
           --platform "managed" \
           --service-account fs-identity \
-          --update-env-vars BUCKET=${{ secret.BUCKET_NAME }} \
+          --update-env-vars BUCKET=${{ secrets.BUCKET_NAME }} \
           --quiet \
           --allow-unauthenticated
