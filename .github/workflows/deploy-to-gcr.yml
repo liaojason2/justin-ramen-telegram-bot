@@ -59,9 +59,11 @@ jobs:
         
     - name: Deploy to Cloud Run
       run: |-
-        gcloud run deploy ${{ env.SERVICE }} \
+        gcloud beta run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest \
           --platform "managed" \
+          --service-account fs-identity \
+          --update-env-vars BUCKET=justin-ramen-bot-buckets \
           --quiet \
           --allow-unauthenticated
