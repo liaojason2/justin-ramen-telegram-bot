@@ -1,0 +1,67 @@
+name: Deploy to Google Cloud Run
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image CI"]
+    types:
+      - completed
+
+env:
+  GITHUB_REGISTRY: ghcr.io
+  IMAGE_NAME: justin-ramen-bot
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  # GCR service name
+  SERVICE: justin-ramen-bot
+  # GCR service region
+  REGION: asia-east1
+
+jobs:
+  deploy-to-cloud-run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v0'
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      with:
+        registry: ${{ env.GITHUB_REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Pull docker image from GitHub Container registry
+      run: |
+        docker pull ${{ env.GITHUB_REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+
+    - name: Tag docker image
+      run: |
+        docker tag ${{ env.GITHUB_REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest gcr.io/${{ secrets.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+
+    - name: Authorize Docker push
+      run: |
+        gcloud auth configure-docker
+
+    - name: Push Container to Google Cloud Container Registry
+      run: |-
+        docker push gcr.io/${{ secrets.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+        
+    - name: Deploy to Cloud Run
+      run: |-
+        gcloud run deploy ${{ env.SERVICE }} \
+          --region ${{ env.REGION }} \
+          --image gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest \
+          --platform "managed" \
+          --quiet \
+          --allow-unauthenticated

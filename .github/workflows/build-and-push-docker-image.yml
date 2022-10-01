@@ -39,17 +39,3 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-
-  deploy-to-cloud-run:
-    runs-on: ubuntu-latest
-    steps:
-      - id: "auth"
-        uses: "google-github-actions/auth@v0"
-        with:
-          credentials_json: "${{ secrets.GCP_SA_KEY }}"
-
-      - name: "Deploy to Cloud Run"
-        uses: "google-github-actions/deploy-cloudrun@v0"
-        with:
-          image: "${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}"
-          service: "justin-ramen-bot"
