@@ -43,11 +43,11 @@ jobs:
     
     - name: Pull docker image from GitHub Container registry
       run: |
-        docker pull ${{ env.GITHUB_REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:gcsfuse
+        docker pull ${{ env.GITHUB_REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
 
     - name: Tag docker image
       run: |
-        docker tag ${{ env.GITHUB_REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:gcsfuse gcr.io/${{ secrets.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
+        docker tag ${{ env.GITHUB_REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest gcr.io/${{ secrets.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest
 
     - name: Authorize Docker push
       run: |
@@ -60,6 +60,7 @@ jobs:
     - name: Deploy to Cloud Run
       run: |-
         gcloud beta run deploy ${{ env.SERVICE }} \
+          --execution-environment gen2
           --region ${{ env.REGION }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:latest \
           --platform "managed" \
