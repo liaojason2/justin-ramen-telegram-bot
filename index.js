@@ -2,14 +2,18 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const date = require('date-and-time');
 const fs = require('fs');
-const http = require('http');
 require('dotenv').config('.env');
 
 const url = process.env.APP_URL || 'https://example.com';
 const port = Number(process.env.PORT || 8080);
 
 const token = process.env.CHANNEL_TOKEN;
-const bot = new TelegramBot(token, { webHook: { port } });
+
+// Use polling
+// const bot = new TelegramBot(token, {polling: true});
+
+// Use Webhook
+const bot = new TelegramBot(token, {webHook: {port}});
 
 bot.setWebHook(`${url}/bot${token}`);
 
@@ -104,25 +108,27 @@ const getPoint = () => {
   return data;
 };
 
-const getTodayRequiredPoint = (today, startDay) => {
-  return Math.ceil(date.subtract(today, startDay).toDays()) * 14;
+const getTodayRequiredPoint = (endDay, startDay) => {
+  return Math.ceil(date.subtract(endDay, startDay).toDays()) * 14;
 };
 
 // /point
 bot.onText(/^\/point(@.*|$)/, async (message) => {
   const chatId = message.chat.id;
   const startDay = new Date('2022/9/12');
-  const today = new Date();
+  const endDay = new Date('2022/9/27');
+  // const today = new Date();
   const point = await getPoint();
-  const todayRequiredPoint = getTodayRequiredPoint(today, startDay);
+  const todayRequiredPoint = getTodayRequiredPoint(endDay, startDay);
   replyMessage = `Justin 目前有 ${point} 點, 完成度 ${Math.floor(
     (point / 300) * 100,
   )}%\n`;
-  replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
+  if (point <= 300) replyMessage += `Justin 到今天應該要有 ${todayRequiredPoint} 點\n`;
   if (todayRequiredPoint - point > 0) replyMessage += 'Justin 進度落後了！\n\n';
+  else if (point >= 300) replyMessage += 'Justin 完成目標了！\n\n';
   else replyMessage += 'Justin 目前有達到目標進度！\n\n';
   replyMessage += `依照目前進度，只要在一般時間有 ${300 - point} 人，\
-或是夜間時段有 ${(300 - point) / 2} 人就可以達到目標了！\n`;
+或是夜間時段有 ${(300 - point) / 2} 人就可以達到目標了！\n\n`;
   replyMessage += '資料由 @gnehs 提供';
   bot.sendMessage(chatId, replyMessage);
 });
