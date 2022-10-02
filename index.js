@@ -5,15 +5,13 @@ const fs = require('fs');
 const http = require('http');
 require('dotenv').config('.env');
 
-
-http.createServer(function(req, res) {
-  // write a response to the client
-  res.write('Hello, this is justin ramen bot server!');
-  res.end(); // end the response
-}).listen(8080);
+const url = process.env.APP_URL || 'https://example.com';
+const port = Number(process.env.PORT || 8080);
 
 const token = process.env.CHANNEL_TOKEN;
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, { webHook: { port } });
+
+bot.setWebHook(`${url}/bot${token}`);
 
 // /start
 bot.onText(/^\/start(@.*|$)/, function(msg) {
